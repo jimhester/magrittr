@@ -17,6 +17,11 @@ split_chain <- function(expr, env)
   i <- 1L 
   while(is.call(expr) && is_pipe(expr[[1L]])) {
     pipes[[i]] <- expr[[1L]]
+    if (length(expr) == 2) {
+      expr[[3L]] <- expr[[2L]]
+      expr[[2L]] <- quote(.)
+    }
+
     rhs <- expr[[3L]]
 
     if (is_parenthesized(rhs))
